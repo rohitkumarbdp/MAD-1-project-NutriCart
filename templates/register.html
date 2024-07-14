@@ -1,0 +1,66 @@
+{% extends 'base.html' %} {% block title %} Register {% endblock title %} {%
+block body %}
+<p class="container" style="color: brown; font-size: large;">
+    <em>"Welcome to our grocery store! Register today and explore a delightful
+    shopping experience with fresh produce and exclusive offers. <br>Start saving time
+    and money on your favorite groceries now!"</em>
+</p>
+
+<h5 class="my-3" style="text-align: center;">Register here</h5>
+
+
+<div class="container">
+    <form action="/register" method="POST">
+        <div class="mb-3">
+            <label for="exampleFormControlInput1" class="form-label">First name : <span
+                    style="color: red;"><b>*</b></span></label>
+            <input type="text" class="form-control" name="first_name" required id="exampleFormControlInput1"
+                placeholder="Choose a unique username" />
+        </div>
+
+        <div class="mb-3">
+            <label for="exampleFormControlInput2" class="form-label">Email address : <span
+                    style="color: red;"><b>*</b></span></label>
+            <input type="email" class="form-control" name="user_email" required id="exampleFormControlInput2"
+                placeholder="name@example.com" />
+        </div>
+
+        <div class="mb-3">
+            <label for="exampleFormControlTextarea3" class="form-label">Address : <span
+                    style="color: red;"><b>*</b></span></label>
+            <textarea class="form-control" id="exampleFormControlTextarea3" name="address"
+            required placeholder="Enter your complete address" rows="2"></textarea>
+        </div>
+
+        <div class="mb-3">
+            <label for="exampleFormControlInput4" class="form-label">Pin Code : <span
+                    style="color: red;"><b>*</b></span></label>
+            <input type="text" class="form-control" name="pincode" maxlength="6" pattern="[0-9]{6}" id="exampleFormControlInput4" 
+            required  placeholder="Enter your 6-digit PIN code" />
+        </div>
+
+        <div class="mb-3">
+            <label for="exampleFormControlInput5" class="form-label">Phone Number : <span
+                style="color: red;"><b>*</b></span></label>
+            <input type="text" class="form-control" name="phone" maxlength="10" pattern="[0-9]{10}" id="exampleFormControlInput5"
+                required placeholder="Enter your 10-digit Phone number" />
+        </div>
+
+
+        <div class="mb-3">
+            <label for="exampleInputPassword6" class="form-label">Password : <span
+                    style="color: red;"><b>*</b></span></label>
+            <input type="password" class="form-control" id="exampleInputPassword6" required name="password"
+                placeholder="Enter a password (8-16 characters)">
+        </div>
+        <div class="mb-3 form-check">
+            <input type="checkbox" class="form-check-input" required id="exampleCheck1">
+            <label class="form-check-label" for="exampleCheck1">I confirm that the above details are correct.</label>
+        </div>
+        <button type="submit" class="btn btn-primary">Create account</button>
+    </form>
+</div>
+
+
+
+{% endblock %}

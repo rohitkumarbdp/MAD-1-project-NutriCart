@@ -1,0 +1,81 @@
+{% extends 'base.html' %}
+{% block title %} Admin {% endblock title %}
+{% block body %}
+<div class="button-container">
+    <a type="button" href="/add_category" class="btn btn-primary add_category">+ Add new category</a>
+</div>
+
+{% block navbar %}
+<div>
+    <nav class="navbar navbar-expand-lg bg-body-tertiary">
+        <div class="container">
+            <a class="navbar-brand" href="/admin_dashboard">Rohit's dashboard</a>
+            
+            <div >
+                <div class="navbar-nav">
+                    <a class="nav-link active" aria-current="page" href="/admin_dashboard">Home</a>
+                    <a class="nav-link active" href="#">|&nbsp; &nbsp;Summary &nbsp;&nbsp;| </a>
+                    <a class="nav-link" style="color: brown;" href="/">Logout</a>
+
+                </div>
+            </div>
+        </div>
+    </nav>
+</div>
+{% endblock navbar %}
+
+{% if allCategory|length==0 %}
+
+
+<div class="container my-3">
+    <div class="alert alert-dark" role="alert">
+        No categories found. Add your first category now!
+    </div>
+</div>
+
+
+{% else %}
+<div class="container my-3">
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">S.No.</th>
+                <th scope="col">Category Name</th>
+                <th scope="col">Items Available</th>
+                <th scope="col" style="padding-left: 180px;"> Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for cat in allCategory %}
+
+            <tr>
+                <th scope="row">{{ loop.index }}</th>
+                <td style="color: brown; font-size: larger;">{{ cat.category_name }}</td>
+
+                <td>
+                    {% set count_list = [] %}
+                    {% for product in allProducts %}
+                    {% if product.category_id == cat.id %}
+                    {% set _= count_list.append(product.product_name) %}
+                    {% endif %}
+                    {% endfor %}
+                    {{ count_list|length }}
+                </td>
+                <td>
+                    <a href="/see_product/admin/-1/{{cat.id}}" type="button" name="user_type" value="admin_view"
+                        class="btn btn-outline-success sm mx-1">See
+                        products</a>
+                    <a href="/add_product/{{cat.id}}" type="button" class="btn btn-outline-dark sm mx-1">+ Add
+                        products</a>
+                    <a href="/delete_category/{{cat.id}}" type="button" class="btn btn-outline-danger sm mx-1">Delete
+                        catgory</a>
+                </td>
+            </tr>
+
+
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endif %}
+{% endblock body %}

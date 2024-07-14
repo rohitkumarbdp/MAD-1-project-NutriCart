@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% block title %} add-category {% endblock title %}
+
+
+
+{% block body %}
+<div class="form_container_cat">
+    <form class="small-form" action="/add_category" method="POST">
+      <input type="text" name="new_category" class="new_cat_input" name="new_category" placeholder="Category name">
+      <button type="submit" class="new_cat">Add category</button>
+    </form>
+  </div>
+
+{% endblock %}

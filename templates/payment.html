@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% block title %} payment {% endblock title %}
+
+
+
+{% block body %}
+<div class="container my-3">
+    <div class="alert alert-dark" role="alert">
+        <strong> Payment is successfully completed!
+        <p>Your products will be delivered soon.</p></strong>
+        <p class="my-3">
+            <a type="button" href="/user_dashboard/{{user_id}}" class="btn btn-primary"
+                style="background-color: brown; border: none;">Go back to dashboard</a></p>
+    </div>
+</div>
+
+
+{% endblock %}

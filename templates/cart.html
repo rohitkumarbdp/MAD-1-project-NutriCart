@@ -1,0 +1,87 @@
+{% extends 'base.html' %}
+{% block title %} Cart {% endblock title %}
+{% block body %}
+
+
+{% block navbar %}
+<div>
+    <nav class="navbar navbar-expand-lg bg-body-tertiary">
+        <div class="container">
+            <p class="navbar-brand"> Hello {{user.first_name}}</p>
+            <div>
+                <div class="navbar-nav">
+                    <a class="nav-link active" href="/user_dashboard/{{user.id}}">Home</a>
+                    <a class="nav-link active" href="{{url_for('profile', user_id=user.id)}}">|&nbsp; &nbsp;Profile&nbsp; &nbsp;|</a>
+                    <a class="nav-link" style="color:brown;" href="/">Logout</a>
+
+                </div>
+            </div>
+        </div>
+    </nav>
+</div>
+
+<div class="button-container">
+    <a type="button" href="/cart/{{user.id}}/payment" class="btn btn-primary add_category">Proceed for payment</a>
+</div>
+
+{% endblock navbar %}
+
+{% if cart_items|length==0 %}
+
+<div class="container my-3">
+    <div class="alert alert-dark" role="alert">
+        Your cart is empty!
+    </div>
+</div>
+
+
+{% else %}
+<div class="container my-3">
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">S.No.</th>
+                <th scope="col">Product Name</th>
+                <th scope="col">Price</th>
+                <th scope="col">Quantity</th>
+                <th scope="col">Subtotal</th>
+                <th scope="col" style="padding-left: 20px;"> Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <form action="/update_cart/{{user.id}}" method="POST">
+                {% for cart_item in cart_items %}
+                <tr>
+                    <th scope="row">{{ loop.index }}</th>
+                    <td style="color: brown; font-size: larger;">
+                        {{get_product_name(cart_item.product_id)}}</td>
+                    <td>
+                        {{get_price(cart_item.product_id)}}/{{get_product_unit(cart_item.product_id)}}
+                    </td>
+                    <td>
+                        <input type="number" style="width: 70px;" name="quantity_{{ cart_item.id }}"
+                            value="{{ cart_item.product_quantity }}" min="1">
+                    </td>
+                    <td>{{ cart_item.product_quantity * get_price(cart_item.product_id) }} &#x20B9;</td>
+                    <td>
+                        <a href="/delete_from_cart/{{user.id}}/{{cart_item.id}}" type="button" name="user_type" value="user"
+                            class="btn btn-outline-danger sm mx-1">Remove</a>
+                    </td>
+                </tr>
+                
+                {% endfor %}
+
+                <td>
+                    <button type="submit" class="btn btn-dark">Calculate Total</button>
+                </td>
+                <td>
+                    <h4>Total Amount:  {{get_total_amount(user.id)}} &#x20B9;
+                    </h4>
+                </td>
+            </form>
+        </tbody>
+    </table>
+</div>
+
+{% endif %}
+{% endblock body %}

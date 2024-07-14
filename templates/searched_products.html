@@ -1,0 +1,84 @@
+{% extends 'base.html' %}
+{% block title %} Search-Products {% endblock title %}
+{% block body %}
+
+
+{% block navbar %}
+
+<div>
+    <nav class="navbar navbar-expand-lg bg-body-tertiary">
+        <div class="container">
+            <p class="navbar-brand"> Hello {{user.first_name}}</p>
+            <div class="navbar-nav">
+                <a class="nav-link active" aria-current="page" href="{{url_for('user_dashboard',user_id=user.id)}}">Dashboard &nbsp;| </a>
+                <a class="nav-link active" aria-current="page" href="/profile/{{user.id}}">Profile</a>
+                <a class="nav-link active" href="/cart/{{user.id}}">|&nbsp; &nbsp;Cart&nbsp; &nbsp;|</a>
+                <a class="nav-link" style="color:brown;" href="/">Logout</a>
+            </div>
+        </div>
+    </nav>
+</div>
+{% endblock navbar %}
+<div class="container" >
+    <form action="{{url_for('searched_products', user_id=user.id)}}" method="POST" style="text-align:end">
+        
+        <label for="search">Search:</label>
+        <input type="text" id="search" name="query" placeholder="Enter Product Name" required>
+        <button type="submit" class="btn btn-dark btn-sm">Search</button></div>
+    </form>
+
+
+
+{% if prods|length==0 %}
+<div class="container my-3">
+    <div class="alert alert-dark" role="alert">
+        No products found!
+        <p class="my-3">
+            <a type="button" href="/user_dashboard/{{user.id}}" class="btn btn-primary"
+                style="background-color: brown; border: none;">Go back to dashboard</a></p>
+    </div>
+</div>
+{% else %}
+<div class="button-container">
+    <a type="button" href="/cart/{{user.id}}" class="btn btn-primary add_category">Go to cart</a>
+</div>
+<div class="container my-3">
+    
+    <table class="table my-3">
+        <thead>
+            <tr>
+                <th scope="col">S.No.</th>
+                <th scope="col">Product Name</th>
+                <th scope="col">Price</th>
+                <th scope="col">Stock Available</th>
+                <th scope="col">Manufacture date</th>
+                <th scope="col">Expiry date</th>
+                <th scope="col" style="padding-left: 30px;"> Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for prod in prods %}
+            <tr>
+                <th scope="row">{{ loop.index }}</th>
+                <td style="color: brown; font-size: larger;">{{ prod.product_name }}</td>
+                <td style="color: brown; font-size: larger;">{{ prod.rate }} /{{prod.unit}}</td>
+                <td style="color: brown; font-size: larger;">{{ prod.stock_quantity }} {{prod.unit}}</td>
+                <td style="color: brown; font-size: larger;">{{ prod.manufacture }}</td>
+                <td style="color: brown; font-size: larger;">{{ prod.expiry }}</td>
+                <td>
+                    {% if  prod.stock_quantity == 0 %}
+                    <p  class="btn btn-danger">Out of Stock</p>
+                    {% else %}
+                    <a href="/add_to_cart/{{user.id}}/{{prod.category_id}}/{{prod.id}}" type="button" class="btn btn-outline-success sm mx-1">Add to cart</a>
+                    {% endif %}
+                    
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+{% endif %}
+
+{% endblock body%}

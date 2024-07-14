@@ -1,0 +1,168 @@
+{% extends 'base.html' %}
+{% block title %} All-products {% endblock title %}
+{% block body %}
+
+
+{% if user_type=='admin' %}
+{% block admin %}
+{% block navbar %}
+<div>
+    <nav class="navbar navbar-expand-lg bg-body-tertiary">
+        <div class="container">
+            <a class="navbar-brand" href="/admin_dashboard">Rohit's dashboard</a>
+            
+            <div>
+                <div class="navbar-nav">
+                    <a class="nav-link active" aria-current="page" href="/admin_dashboard">Home</a>
+                    <a class="nav-link active" href="#">|&nbsp; &nbsp;Summary &nbsp;&nbsp;| </a>
+                    <a class="nav-link" style="color:brown;" href="/">Logout</a>
+
+                </div>
+            </div>
+        </div>
+    </nav>
+</div>
+{% endblock navbar %}
+
+{% if allProduct|length==0 %}
+
+<div class="container my-3">
+    <div class="alert alert-dark" role="alert">
+        No products found in <span style="color: brown;"><strong>{{category.category_name}} category</strong></span>.
+        Click below to add your first Product now!
+        <p class="my-3"><a type="button" href="/add_product/{{category.id}}" class="btn btn-primary"
+                style="background-color: brown; border: none;">+ Add new Product</a></p>
+    </div>
+</div>
+{% else %}
+<div class="button-container">
+    <a type="button" href="/add_product/{{category.id}}" class="btn btn-primary add_category">+ Add new product</a>
+</div>
+<div class="container my-3">
+    <h4>All products in <span style="color: brown;">{{category.category_name}} category</span></h4>
+    <table class="table my-3">
+        <thead>
+            <tr>
+                <th scope="col">S.No.</th>
+                <th scope="col">Product Name</th>
+                <th scope="col">Price</th>
+                <th scope="col">Stock Available</th>
+                <th scope="col">Manufacture date</th>
+                <th scope="col">Expiry date</th>
+                <th scope="col" style="padding-left: 80px;"> Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for prod in allProduct %}
+            <tr>
+                <th scope="row">{{ loop.index }}</th>
+                <td style="color: brown; font-size: larger;">{{ prod.product_name }}</td>
+                <td style="color: brown; font-size: larger;">{{ prod.rate }} /{{prod.unit}}</td>
+                <td style="color: brown; font-size: larger;">
+                    {% if  prod.stock_quantity == 0 %}
+                    <b>No Stock Left</b>
+                    {% else %}
+                    {{ prod.stock_quantity }} {{prod.unit}}
+                    {% endif %}
+                </td>
+                <td style="color: brown; font-size: larger;">{{ prod.manufacture }}</td>
+                <td style="color: brown; font-size: larger;">{{ prod.expiry }}</td>
+                <td>
+                    <a href="/edit_product/{{prod.id}}" type="button" class="btn btn-outline-success sm mx-1">Edit</a>
+                    <a href="/delete_product/{{prod.id}}" type="button" class="btn btn-outline-danger sm mx-1">Delete
+                        product</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endif %}
+{% endblock admin %}
+
+
+{% else %}
+
+
+{% block User %}
+
+
+<div>
+    <nav class="navbar navbar-expand-lg bg-body-tertiary">
+        <div class="container">
+            <a class="navbar-brand" href="/user_dashboard/{{user.id}}"> Hello {{user.first_name}}</a>
+
+            
+            <div>
+                <div class="navbar-nav">
+                    <a class="nav-link active" aria-current="page" href="/profile/{{user.id}}">Profile</a>
+                    <a class="nav-link active" href="/cart/{{user.id}}">|&nbsp; &nbsp;Cart&nbsp; &nbsp;|</a>
+                    <a class="nav-link" style="color:brown;" href="/">Logout</a>
+
+                </div>
+            </div>
+        </div>
+    </nav>
+</div>
+
+
+{% if allProduct|length==0 %}
+<div class="container my-3">
+    <div class="alert alert-dark" role="alert">
+        No products found in <span style="color: brown;"><strong>{{category.category_name}} category</strong></span> !
+        <p class="my-3">
+            <a type="button" href="/user_dashboard/{{user.id}}" class="btn btn-primary"
+                style="background-color: brown; border: none;">Go back to dashboard</a></p>
+    </div>
+</div>
+{% else %}
+<div class="button-container">
+    <a type="button" href="/cart/{{user.id}}" class="btn btn-primary add_category">Go to cart</a>
+</div>
+<div class="container my-3">
+    <h4>All products in <span style="color: brown;">{{category.category_name}} category</span></h4>
+    <table class="table my-3">
+        <thead>
+            <tr>
+                <th scope="col">S.No.</th>
+                <th scope="col">Product Name</th>
+                <th scope="col">Price</th>
+                <th scope="col">Stock Available</th>
+                <th scope="col">Manufacture date</th>
+                <th scope="col">Expiry date</th>
+                <th scope="col" style="padding-left: 30px;"> Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for prod in allProduct %}
+            <tr>
+                <th scope="row">{{ loop.index }}</th>
+                <td style="color: brown; font-size: larger;">{{ prod.product_name }}</td>
+                <td style="color: brown; font-size: larger;">{{ prod.rate }} /{{prod.unit}}</td>
+                <td style="color: brown; font-size: larger;">{{ prod.stock_quantity }} {{prod.unit}}</td>
+                <td style="color: brown; font-size: larger;">{{ prod.manufacture }}</td>
+                <td style="color: brown; font-size: larger;">{{ prod.expiry }}</td>
+                <td>
+                    {% if  prod.stock_quantity == 0 %}
+                    <p  class="btn btn-danger">Out of Stock</p>
+                    {% else %}
+                    <a href="/add_to_cart/{{user.id}}/{{prod.category_id}}/{{prod.id}}" type="button" class="btn btn-outline-success sm mx-1">Add to cart</a>
+                    {% endif %}
+                    
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+{% endif %}
+
+
+
+{% endblock User %}
+
+
+{% endif %}
+
+{% endblock %}

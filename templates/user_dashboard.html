@@ -1,0 +1,79 @@
+{% extends 'base.html' %}
+{% block title %} User_dashboard {% endblock title %}
+{% block body %}
+
+
+{% block navbar %}
+
+
+<div>
+    <nav class="navbar navbar-expand-lg bg-body-tertiary">
+        <div class="container">
+            <p class="navbar-brand"> Hello {{user.first_name}}</p>
+            <div class="navbar-nav">
+                <a class="nav-link active" aria-current="page" href="/profile/{{user.id}}">Profile</a>
+                <a class="nav-link active" href="/cart/{{user.id}}">|&nbsp; &nbsp;Cart&nbsp; &nbsp;|</a>
+                <a class="nav-link" style="color:brown;" href="/">Logout</a>
+            </div>
+        </div>
+    </nav>
+</div>
+{% endblock navbar %}
+{% if allCategory|length==0 %}
+
+<div class="container my-3">
+    <div class="alert alert-dark" role="alert">
+        No products available!
+    </div>
+</div>
+
+
+{% else %}
+<div class="container" >
+<form action="{{url_for('searched_products', user_id=user.id)}}" method="POST" style="text-align:end">
+    
+    <label for="search">Search:</label>
+    <input type="text" id="search" name="query" placeholder="Enter Product Name" required>
+    <button type="submit" class="btn btn-dark btn-sm">Search</button></div>
+</form>
+<div class="container my-3">
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">S.No.</th>
+                <th scope="col">Category Name</th>
+                <th scope="col">Items Available</th>
+                <th scope="col" style="padding-left: 40px;"> Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for cat in allCategory %}
+
+            <tr>
+                <th scope="row">{{ loop.index }}</th>
+                <td style="color: brown; font-size: larger;">{{ cat.category_name }}</td>
+
+                <td>
+                    {% set count_list = [] %}
+                    {% for product in allProducts %}
+                    {% if product.category_id == cat.id %}
+                    {% set _= count_list.append(product.product_name) %}
+                    {% endif %}
+                    {% endfor %}
+                    {{ count_list|length }}
+
+                </td>
+                <td>
+                    <a href="/see_product/user/{{user.id}}/{{cat.id}}" type="button" name="user_type" value="user"
+                        class="btn btn-outline-success sm mx-1">See
+                        products</a>
+                </td>
+            </tr>
+
+
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endif %}
+{% endblock body %}

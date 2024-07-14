@@ -1,0 +1,48 @@
+
+
+.add_category {
+    color: white;
+    position: fixed;
+    bottom: 100px; 
+    right: 100px;
+    
+    background-color:brown;
+    border:0ch   
+}
+.alert-dark{
+    bottom: px
+}
+
+
+
+/*  ADD NEW CATEGORY FORM   */
+  /* Center the form container horizontally and vertically */
+  .form_container_cat {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 50vh; /* Adjust the height to center vertically */
+  }
+  
+  .small-form {
+    background-color: #f1f1f1;
+    padding: 60px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  }
+  
+  .new_cat_input {
+    width: 100%;
+    margin-bottom: 20px;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+  }
+  .new_cat {
+    width: 100%;
+    padding: 10px;
+    background-color: brown;
+    color: #fff;
+    border: none;
+    border-radius: 3px;
+  }
+  
