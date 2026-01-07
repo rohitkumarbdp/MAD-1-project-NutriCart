@@ -1,6 +1,6 @@
 <h1>Nutricart.com Web Application</h1>
 
-<p>Nutricart.com is an online grocery shopping platform developed by Rohit Kumar. The platform offers two main user roles: Admin and User.</p>
+<p>Nutricart.com is an online grocery shopping platform. The platform offers two main user roles: Admin and User.</p>
 
 <h2>Features</h2>
 
